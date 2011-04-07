@@ -217,4 +217,23 @@
 	.red{
 		background-color:red;
 	}
+	#add{
+		
+		margin:10px 0 0 100px;
+		width:40px;
+		height:40px;
+		border:0;
+		background:#ccc;
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		border-radius: 10px;
+		cursor:pointer;
+		font-size:28px;
+		padding:0 0 20px 0;
+	}
+	#add:hover{
+		color:#fff;
+		text-shadow: 0px -1px 1px #00c7ff;
+		background:#00b7eb;
+	}
 }
