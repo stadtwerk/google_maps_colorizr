@@ -9,7 +9,6 @@
          url('../fonts/graublauweb-webfont.svg#webfontkFO6fx3f') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
 
 @font-face {
@@ -21,7 +20,6 @@
          url('../fonts/graublauwebbold-webfont.svg#webfontQB5I5TIk') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
 
 @media all {
@@ -51,12 +49,14 @@
 		margin:0;
 		text-align:center;
 		font-size:40px;
-		line-height:75px;
+		line-height:78px;
 		color:#be883a;
 		color:#222;
 		text-shadow: 0px 1px 1px #666;
 	}
-	
+	b{
+		font-family:  'GraublauWebBold', sans-serif;
+	}
 	a{
 		color:#fff;
 		text-decoration:none;
@@ -79,28 +79,30 @@
 		background:#444;
 		overflow:hidden;
 	}
-
 	#middle{
 		display: block;
 	}
-
 	#footer{
 		position: absolute;
 		bottom: 0;
 		width:100%;
-		height: 70px;
+		height:50px;
 		overflow:auto;
+	}
+	#footer p, #version{
+		padding:20px 20px 0 20px;
+		color:#ccc;
 	}
 	#footer p{
 		float:left;
-		padding:30px 20px 0 20px;
-		color:#ccc;
+	}
+	#version{
+		float:right;
 	}
 	#logo{
 		float:right;
 		margin:5px 5px 0 0;
 	}
-
 	#left{
 		position:absolute;
 		height:auto;
@@ -109,14 +111,13 @@
 		left:0;
 		right:0;
 		margin-top:90px;
-		margin-bottom:70px;
+		margin-bottom:50px;
 		margin-right:0;
 		margin-left:0;
 		padding: 0 20px 0 30px;
 		width:240px;
 		overflow:auto;
 	}
-
 	#map{
 		position:absolute;
 		height:auto;
@@ -125,19 +126,17 @@
 		left:0;
 		right:0;
 		margin-top:90px;
-		margin-bottom:70px;
+		margin-bottom:50px;
 		margin-right:300px;
 		margin-left:300px;
 		background:#ccc !important;
 		-webkit-border-radius: 10px;
 		-moz-border-radius: 10px;
 		border-radius: 10px;
-		
 	}
 	#map a{
 		color:#fff !important;
 	}
-
 	#right{
 		position:absolute;
 		height:auto;
@@ -146,7 +145,7 @@
 		left:auto;
 		right:0;
 		margin-top:90px;
-		margin-bottom:70px;
+		margin-bottom:50px;
 		margin-right:20px;
 		margin-left:auto;
 		width:240px;
@@ -156,9 +155,32 @@
 		border-radius: 10px;
 		background:#ccc;
 	}
-	
-	#right .top{
-		
+	#copy{
+		position:absolute;
+		height:30px;
+		width:240px;
+		bottom:0;
+		right:0;
+		padding:10px;
+		-webkit-border-bottom-right-radius: 10px;
+		-webkit-border-bottom-left-radius: 10px;
+		-moz-border-radius-bottomright: 10px;
+		-moz-border-radius-bottomleft: 10px;
+		border-bottom-right-radius: 10px;
+		border-bottom-left-radius: 10px;
+		background:#ccc;
+		cursor:pointer;
+		text-align:center;
+		font-family: 'GraublauWebBold', sans-serif;
+		font-size:20px;
+		line-height:28px;
+		color:#444;
+		text-shadow: 0px 1px 1px #eee;
+	}
+	#copy:hover{
+		color:#fff;
+		text-shadow: 0px -1px 1px #00c7ff;
+		background:#00b7eb;
 	}
 	#json{
 		position:absolute;
@@ -167,16 +189,16 @@
 		top:0;
 		left:auto;
 		right:0;
-		margin-top:90px;
-		margin-bottom:70px;
+		margin-top:85px;
+		margin-bottom:50px;
 		margin-right:0;
 		margin-left:auto;
 		width:240px;
 		padding:10px;
 		background:#fff;
 		white-space: pre;
+		overflow:auto;
 	}
-	
 	.item{
 		padding:10px;
 		width:100%;
@@ -186,23 +208,13 @@
 		-moz-border-radius: 10px;
 		border-radius: 10px;
 	}
-	
 	.wrap{
 		overflow:auto;
 	}
-	
-	.item .left{
-		
+	.item .left{		
 		width:100px;
 	}
-	.item .right{
-	
-	}
-	
-	
-	
 	.red{
 		background-color:red;
 	}
 }
-
