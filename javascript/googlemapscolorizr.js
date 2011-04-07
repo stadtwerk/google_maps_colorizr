@@ -46,7 +46,6 @@ function googlemapcolorizer()
         var styledMapType = new google.maps.StyledMapType(styles, { name: 'Styled' });
         this.map.mapTypes.set('Styled', styledMapType);
 		
-		console.log(this.map);
 		//initialise class
 		this.setGoogleBaseValues();
 		this.index = 0;
