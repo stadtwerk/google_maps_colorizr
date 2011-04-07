@@ -5,14 +5,16 @@ function googlemapcolorizer()
 	var index;
 	var googleBaseValues;
 	
+	// initialise map and class
 	this.init = function()
 	{
+		//initialise map
 		var options = {
 			mapTypeControlOptions: {
 				mapTypeIds: [ 'Styled']
 			},
-			center: new google.maps.LatLng(30, 0),
-			zoom: 1,
+			center: new google.maps.LatLng(54.32, 10.10),
+			zoom: 4,
 			mapTypeId: 'Styled'
         };
         
@@ -21,14 +23,18 @@ function googlemapcolorizer()
         var styledMapType = new google.maps.StyledMapType(styles, { name: 'Styled' });
         this.map.mapTypes.set('Styled', styledMapType);
 		
+		console.log(this.map);
+		//initialise class
 		this.setGoogleBaseValues();
 		this.index = 0;
 		this.styles=[];
 		this.isValidColor = [];
 		this.appendItemDiv();
+		this.writeCode();
 		
 	};
 	
+	// sets the base saturation and lightness from google maps
 	this.setGoogleBaseValues = function()
 	{
 		this.googleBaseValues = new Array();
@@ -44,6 +50,7 @@ function googlemapcolorizer()
 		this.googleBaseValues[9] = new Array("road.local", 100, 100);
 	};
 	
+	//appends a new Style
 	this.appendItemDiv = function()
 	{
 		document.getElementById("items").appendChild(this.getItemDiv());
@@ -51,6 +58,7 @@ function googlemapcolorizer()
 		this.index++;
 	};
 	
+	//deletes a style
 	this.deleteItemDiv = function(button)
 	{
 		var item = button.parentNode.parentNode;
@@ -58,6 +66,42 @@ function googlemapcolorizer()
 		this.deleteStyle(parseInt(item.firstChild.value));
 	};
 	
+		//when clicked on a drop down Item (with mouse)
+	this.selectedDropDownItem = function(option)
+	{
+		var itemdiv = option.parentNode.parentNode.parentNode.parentNode;
+		this.checkColor(itemdiv);
+	};
+	
+	//when Changes a drop down list (with keyboard)
+	this.selectedDropDown = function(option)
+	{
+		var itemdiv = option.parentNode.parentNode.parentNode;
+		this.checkColor(itemdiv);
+	};
+	
+	//when changed the color
+	this.changedColor = function(input)
+	{
+		var itemdiv = input.parentNode.parentNode.parentNode;
+		this.checkColor(itemdiv);
+	};
+	
+	
+	
+	
+	//adds a default style to style Array
+	this.addStyle = function()
+	{
+		this.styles.push([])
+		this.styles[this.index] = {
+          featureType: 'water',
+          elementType: 'all',
+          stylers: [],
+        };
+	};
+	
+	//delete a style from style Array
 	this.deleteStyle = function(id)
 	{
 		if(id < this.index-1)
@@ -69,16 +113,7 @@ function googlemapcolorizer()
 		this.renderStyle();
 	};
 	
-	this.addStyle = function()
-	{
-		this.styles.push([])
-		this.styles[this.index] = {
-          featureType: 'all',
-          elementType: 'all',
-          stylers: [],
-        };
-	};
-	
+	//changes the IDs of the HTML Style divs to be equal with Style Array IDs
 	this.changeHtmlIds = function(deletedId)
 	{
 		console.log(deletedId+"\n");
@@ -92,23 +127,24 @@ function googlemapcolorizer()
 		}
 	};
 	
+	//returns a new HTML Item Div
 	this.getItemDiv = function()
 	{
 		value = '<input type="hidden" name="id" value="'+this.index+'">';
 		value += '<div class="wrap">';
 		value += '	<div class="left">featureTyp: </div>';
 		value += '	<div class="right">';
-		value += '		<select name="featureTyp">';
-		value += '			<option onclick="gmc.selectedDropDown(this)">water</option>';
-		value += '			<option onclick="gmc.selectedDropDown(this)">landscape.man_made</option>';
-		value += '			<option onclick="gmc.selectedDropDown(this)">landscape.natural</option>';
-		value += '			<option onclick="gmc.selectedDropDown(this)">poi.medical</option>';
-		value += '			<option onclick="gmc.selectedDropDown(this)">poi.school</option>';
-		value += '			<option onclick="gmc.selectedDropDown(this)">poi.place_of_worship</option>';
-		value += '			<option onclick="gmc.selectedDropDown(this)">poi.park</option>';
-		value += '			<option onclick="gmc.selectedDropDown(this)">road.highway</option>';
-		value += '			<option onclick="gmc.selectedDropDown(this)">road.arterial</option>';
-		value += '			<option onclick="gmc.selectedDropDown(this)">road.local</option>';
+		value += '		<select name="featureTyp" onkeyup="gmc.selectedDropDown(this)" >';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">water</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">landscape.man_made</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">landscape.natural</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">poi.medical</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">poi.school</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">poi.place_of_worship</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">poi.park</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">road.highway</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">road.arterial</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">road.local</option>';
 		value += '		</select>';
 		value += '	</div>';
 		value += '</div>';
@@ -116,15 +152,15 @@ function googlemapcolorizer()
 		value += '	<div class="left">elementType: </div>';
 		value += '	<div class="right">';
 		value += '		<select name="elementType">';
-		value += '			<option onclick="gmc.selectedDropDown(this)">all</option>';
-		value += '			<option onclick="gmc.selectedDropDown(this)">geometry</option>';
-		value += '			<option onclick="gmc.selectedDropDown(this)">labels</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">all</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">geometry</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">labels</option>';
 		value += '		</select>';
 		value += '	</div>';
 		value += '</div>';
 		value += '<div class="wrap">';
 		value += '	<div class="left">RGB Value: </div>';
-		value += '	<div class="right"><input type="text" name="RGBValue"  onkeyup="gmc.changedColor(this)"/></div>';
+		value += '	<div class="right"><input type="text" name="RGBValue" onchange="gmc.changedColor(this)"  onkeyup="gmc.changedColor(this)"/></div>';
 		value += '</div>';
 		value += '<div><input type="button" value="-" onclick="gmc.deleteItemDiv(this)"></div>';
 		newItemDiv = document.createElement('div');
@@ -134,18 +170,8 @@ function googlemapcolorizer()
 		return newItemDiv;
 	};
 	
-	this.selectedDropDown = function(option)
-	{
-		var itemdiv = option.parentNode.parentNode.parentNode.parentNode;
-		this.checkColor(itemdiv);
-	};
 	
-	this.changedColor = function(input)
-	{
-		var itemdiv = input.parentNode.parentNode.parentNode;
-		this.checkColor(itemdiv);
-	};
-	
+	//checks if color is valid rgb
 	this.checkColor = function(item)
 	{
 		var id = item.firstChild.value;
@@ -170,21 +196,18 @@ function googlemapcolorizer()
 		}
 	};
 
+	//calculates HSL values and merge with google base values to get the real color and add them to style Array
 	this.Calculate=function(item, color){
 		var id = item.firstChild.value;
 		var RGB = color;
 		var featureType = item.getElementsByTagName("select")[0].value;
 		var elementType = item.getElementsByTagName("select")[1].value;
 		
-		if (RGB.length==6){
-			var R = parseInt(RGB.substring(0,2), 16)/255;
-			var G = parseInt(RGB.substring(2,4), 16)/255;
-			var B = parseInt(RGB.substring(4,6), 16)/255;
-		}else{
-			var R = parseInt(RGB.substring(0,1)+RGB.substring(0,1), 16)/255;
-			var G = parseInt(RGB.substring(1,2)+RGB.substring(1,2), 16)/255;
-			var B = parseInt(RGB.substring(2,3)+RGB.substring(2,3), 16)/255;
-		}
+		//calculate HSL values
+		var R = parseInt(RGB.substring(0,2), 16)/255;
+		var G = parseInt(RGB.substring(2,4), 16)/255;
+		var B = parseInt(RGB.substring(4,6), 16)/255;
+
 		var min = Math.min(Math.min(R, G), B);
 		var max = Math.max(Math.max(R, G), B);
 		var L = ((max+min)/2)*100;
@@ -199,6 +222,7 @@ function googlemapcolorizer()
 			}
 		}
 		
+		//get base values
 		for (var i=0, item; item=this.googleBaseValues[i]; i++) {
 		   if (this.googleBaseValues[i][0] == featureType) {
 			 var Lbase = this.googleBaseValues[i][2];
@@ -206,6 +230,7 @@ function googlemapcolorizer()
 		   } 
 		}
 		
+		//merge HSL and base values
 		var googleL;
 		var googleS;
 		if(L<Lbase){
@@ -224,6 +249,7 @@ function googlemapcolorizer()
 			googleS = Sbase;
 		}
 		
+		//add to style Array
 		this.styles[id].featureType = featureType;
 		this.styles[id].elementType = elementType;
 		this.styles[id].stylers = [];
@@ -233,14 +259,40 @@ function googlemapcolorizer()
 		this.renderStyle();
 	};
 	
+	//update map Style
 	this.renderStyle = function()
 	{
 		var styledMapType = new google.maps.StyledMapType(this.styles, { name: 'Styled' });
         this.map.mapTypes.set('Styled', styledMapType);
-		this.showJson();
+		this.writeCode();
 	}
 	
-	this.showJson = function()
+	this.writeCode = function()
+	{
+		
+		var center = this.map.getCenter();
+		var zoom = this.map.getZoom();
+		output = "var styles = "
+		output += this.getJson();
+		output += "\nvar options = {\n"
+		output += "	mapTypeControlOptions: {\n"
+		output += "		mapTypeIds: [ 'Styled']\n"
+		output += "	},\n"
+		output += "	center: new google.maps.LatLng("+center.lat()+", "+center.lng()+"),\n"
+		output += "	zoom: "+zoom+",\n"
+		output += "	mapTypeId: 'Styled'\n"
+        output += "};\n"
+        output += "var div = document.getElementById('map');\n"
+        output += "var map = new google.maps.Map(div, options);\n"
+        output += "var styledMapType = new google.maps.StyledMapType(styles, { name: 'Styled' });\n"
+        output += "map.mapTypes.set('Styled', styledMapType);\n"
+		
+		document.getElementById('json').innerHTML=output;
+	};
+	
+	
+	//writes Json
+	this.getJson = function()
 	{
 		var jsonStyles = [];
 		for (var i = 0; i < this.styles.length; i++) {
@@ -265,8 +317,9 @@ function googlemapcolorizer()
 			jsonStyles[i] += '  }';
 		}
 		var json = '[\n  ' + jsonStyles.join(',') + '\n]';
-		document.getElementById('json').innerHTML=json;
+		return json;
 	}
+
 }
 
 var gmc = new googlemapcolorizer();
