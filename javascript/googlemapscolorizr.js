@@ -24,6 +24,7 @@ function googlemapcolorizer()
 		this.setGoogleBaseValues();
 		this.index = 0;
 		this.styles=[];
+		this.isValidColor = [];
 		this.appendItemDiv();
 		
 	};
@@ -98,16 +99,16 @@ function googlemapcolorizer()
 		value += '	<div class="left">featureTyp: </div>';
 		value += '	<div class="right">';
 		value += '		<select name="featureTyp">';
-		value += '			<option>water</option>';
-		value += '			<option>landscape.man_made</option>';
-		value += '			<option>landscape.natural</option>';
-		value += '			<option>poi.medical</option>';
-		value += '			<option>poi.school</option>';
-		value += '			<option>poi.place_of_worship</option>';
-		value += '			<option>poi.park</option>';
-		value += '			<option>road.highway</option>';
-		value += '			<option>road.arterial</option>';
-		value += '			<option>road.local</option>';
+		value += '			<option onclick="gmc.selectedDropDown(this)">water</option>';
+		value += '			<option onclick="gmc.selectedDropDown(this)">landscape.man_made</option>';
+		value += '			<option onclick="gmc.selectedDropDown(this)">landscape.natural</option>';
+		value += '			<option onclick="gmc.selectedDropDown(this)">poi.medical</option>';
+		value += '			<option onclick="gmc.selectedDropDown(this)">poi.school</option>';
+		value += '			<option onclick="gmc.selectedDropDown(this)">poi.place_of_worship</option>';
+		value += '			<option onclick="gmc.selectedDropDown(this)">poi.park</option>';
+		value += '			<option onclick="gmc.selectedDropDown(this)">road.highway</option>';
+		value += '			<option onclick="gmc.selectedDropDown(this)">road.arterial</option>';
+		value += '			<option onclick="gmc.selectedDropDown(this)">road.local</option>';
 		value += '		</select>';
 		value += '	</div>';
 		value += '</div>';
@@ -115,15 +116,15 @@ function googlemapcolorizer()
 		value += '	<div class="left">elementType: </div>';
 		value += '	<div class="right">';
 		value += '		<select name="elementType">';
-		value += '			<option>all</option>';
-		value += '			<option>geometry</option>';
-		value += '			<option>labels</option>';
+		value += '			<option onclick="gmc.selectedDropDown(this)">all</option>';
+		value += '			<option onclick="gmc.selectedDropDown(this)">geometry</option>';
+		value += '			<option onclick="gmc.selectedDropDown(this)">labels</option>';
 		value += '		</select>';
 		value += '	</div>';
 		value += '</div>';
 		value += '<div class="wrap">';
 		value += '	<div class="left">RGB Value: </div>';
-		value += '	<div class="right"><input type="text" name="RGBValue"  onkeyup="gmc.checkColor(this)"/></div>';
+		value += '	<div class="right"><input type="text" name="RGBValue"  onkeyup="gmc.changedColor(this)"/></div>';
 		value += '</div>';
 		value += '<div><input type="button" value="-" onclick="gmc.deleteItemDiv(this)"></div>';
 		newItemDiv = document.createElement('div');
@@ -133,33 +134,48 @@ function googlemapcolorizer()
 		return newItemDiv;
 	};
 	
-	
-	this.checkColor = function(input)
+	this.selectedDropDown = function(option)
 	{
+		var itemdiv = option.parentNode.parentNode.parentNode.parentNode;
+		this.checkColor(itemdiv);
+	};
+	
+	this.changedColor = function(input)
+	{
+		var itemdiv = input.parentNode.parentNode.parentNode;
+		this.checkColor(itemdiv);
+	};
+	
+	this.checkColor = function(item)
+	{
+		var id = item.firstChild.value;
+		var input = item.getElementsByTagName("input")[1];
 		var color = input.value;
-		var id = input.parentNode.parentNode.parentNode.firstChild.value
+		
 		if(color.substring(0,1) == "#")
 			color = color.substring(1,color.length);
 		if(!isNaN("0x"+color) && (color.length == 3 || color.length == 6)){
+			this.isValidColor[id] = true;
 			if(color.length ==3){
 				color = color.substring(0,1)+color.substring(0,1)+color.substring(1,2)+color.substring(1,2)+color.substring(2,3)+color.substring(2,3);
 			}
 			input.className="";
-			this.Calculate(id, color, input.parentNode.parentNode.parentNode.getElementsByTagName("select")[0].value, input.parentNode.parentNode.parentNode.getElementsByTagName("select")[1].value);
+			this.Calculate(item, color);
 		}else{
 			input.className="red";
-			this.deleteStylers(id);
+			this.styles[id].stylers = [];
+			if(this.isValidColor[id] == true)
+				this.renderStyle();
+			this.isValidColor[id] = false;
 		}
 	};
-	
-	this.deleteStylers = function(id)
-	{
-		this.styles[id].stylers = [];
-		this.renderStyle();
-	};
 
-	this.Calculate=function(id, color, featureType, elementType){
+	this.Calculate=function(item, color){
+		var id = item.firstChild.value;
 		var RGB = color;
+		var featureType = item.getElementsByTagName("select")[0].value;
+		var elementType = item.getElementsByTagName("select")[1].value;
+		
 		if (RGB.length==6){
 			var R = parseInt(RGB.substring(0,2), 16)/255;
 			var G = parseInt(RGB.substring(2,4), 16)/255;
@@ -185,8 +201,8 @@ function googlemapcolorizer()
 		
 		for (var i=0, item; item=this.googleBaseValues[i]; i++) {
 		   if (this.googleBaseValues[i][0] == featureType) {
-			 var Lbase = this.googleBaseValues[i][2]
-			 var Sbase = this.googleBaseValues[i][1]
+			 var Lbase = this.googleBaseValues[i][2];
+			 var Sbase = this.googleBaseValues[i][1];
 		   } 
 		}
 		
@@ -208,14 +224,12 @@ function googlemapcolorizer()
 			googleS = Sbase;
 		}
 		
-		
 		this.styles[id].featureType = featureType;
 		this.styles[id].elementType = elementType;
-
+		this.styles[id].stylers = [];
 		this.styles[id].stylers.push({hue: "#"+color});
 		this.styles[id].stylers.push({saturation: Math.round(googleS)});
 		this.styles[id].stylers.push({lightness: Math.round(googleL)});	
-		console.log(this.styles);
 		this.renderStyle();
 	};
 	
@@ -251,7 +265,7 @@ function googlemapcolorizer()
 			jsonStyles[i] += '  }';
 		}
 		var json = '[\n  ' + jsonStyles.join(',') + '\n]';
-		document.getElementById('right').innerHTML=json;
+		document.getElementById('json').innerHTML=json;
 	}
 }
 
