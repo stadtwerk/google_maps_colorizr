@@ -1,10 +1,9 @@
 function googlemapcolorizer()
 {
-	var styles = [];
+	var styles;
 	var map;
 	var index;
 	var googleBaseValues;
-	var styles;
 	
 	this.init = function()
 	{
@@ -21,9 +20,10 @@ function googlemapcolorizer()
         this.map = new google.maps.Map(div, options);
         var styledMapType = new google.maps.StyledMapType(styles, { name: 'Styled' });
         this.map.mapTypes.set('Styled', styledMapType);
-		this.index = 0;
+		
 		this.setGoogleBaseValues();
-		this.styles = new Object();
+		this.index = 0;
+		this.styles=[];
 		this.appendItemDiv();
 		
 	};
@@ -45,15 +45,50 @@ function googlemapcolorizer()
 	
 	this.appendItemDiv = function()
 	{
-		this.index++;
 		document.getElementById("items").appendChild(this.getItemDiv());
+		this.addStyle();
+		this.index++;
 	};
 	
 	this.deleteItemDiv = function(button)
 	{
-		var lastindex = this.index;
 		var item = button.parentNode.parentNode;
 		document.getElementById("items").removeChild(item);
+		this.deleteStyle(parseInt(item.firstChild.value));
+	};
+	
+	this.deleteStyle = function(id)
+	{
+		if(id < this.index-1)
+		{
+			this.changeHtmlIds(id);
+		}
+		this.styles.splice(id, 1);
+		this.index--;
+		this.renderStyle();
+	};
+	
+	this.addStyle = function()
+	{
+		this.styles.push([])
+		this.styles[this.index] = {
+          featureType: 'all',
+          elementType: 'all',
+          stylers: [],
+        };
+	};
+	
+	this.changeHtmlIds = function(deletedId)
+	{
+		console.log(deletedId+"\n");
+		for(var i = deletedId+1; i < this.index; i++)
+		{
+			console.log(i+"\n");
+			itemdiv = document.getElementById("item"+i.toString());
+			hiddeninput = itemdiv.firstChild;
+			itemdiv.setAttribute("id", "item"+(i-1));
+			hiddeninput.setAttribute("value", i-1);
+		}
 	};
 	
 	this.getItemDiv = function()
@@ -97,19 +132,30 @@ function googlemapcolorizer()
 		newItemDiv.innerHTML = value;
 		return newItemDiv;
 	};
-
+	
 	
 	this.checkColor = function(input)
 	{
 		var color = input.value;
+		var id = input.parentNode.parentNode.parentNode.firstChild.value
 		if(color.substring(0,1) == "#")
 			color = color.substring(1,color.length);
 		if(!isNaN("0x"+color) && (color.length == 3 || color.length == 6)){
+			if(color.length ==3){
+				color = color.substring(0,1)+color.substring(0,1)+color.substring(1,2)+color.substring(1,2)+color.substring(2,3)+color.substring(2,3);
+			}
 			input.className="";
-			gmc.Calculate(input.parentNode.parentNode.parentNode.firstChild.value, color, input.parentNode.parentNode.parentNode.getElementsByTagName("select")[0].value, input.parentNode.parentNode.parentNode.getElementsByTagName("select")[1].value);
+			this.Calculate(id, color, input.parentNode.parentNode.parentNode.getElementsByTagName("select")[0].value, input.parentNode.parentNode.parentNode.getElementsByTagName("select")[1].value);
 		}else{
 			input.className="red";
+			this.deleteStylers(id);
 		}
+	};
+	
+	this.deleteStylers = function(id)
+	{
+		this.styles[id].stylers = [];
+		this.renderStyle();
 	};
 
 	this.Calculate=function(id, color, featureType, elementType){
@@ -161,25 +207,52 @@ function googlemapcolorizer()
 		}else{
 			googleS = Sbase;
 		}
-		// this.styles[id] = new Object();
-		// this.styles[id]['featureType'] = featureType;
-		// this.styles[id]['elementType'] = elementType;
-		// this.styles[id]['stylers'] = new Object();
-		// this.styles[id]['stylers']['hue'] = '"'+color+'"';
-		// this.styles[id]['stylers']['saturation'] = googleS;
-		// this.styles[id]['stylers']['lightness'] = googleL;
-		this.styles.id = new Object();
-		this.styles.id.featureType = featureType;
-		this.styles.id.elementType = elementType;
-		this.styles.id.stylers = new Object();
-		this.styles.id.stylers.hue = '"'+color+'"';
-		this.styles.id.stylers.saturation = googleS;
-		this.styles.id.stylers.lightness = googleL;
-		var myJsonText = JSON.stringify(this.styles);
-		console.log(id);
+		
+		
+		this.styles[id].featureType = featureType;
+		this.styles[id].elementType = elementType;
+
+		this.styles[id].stylers.push({hue: "#"+color});
+		this.styles[id].stylers.push({saturation: Math.round(googleS)});
+		this.styles[id].stylers.push({lightness: Math.round(googleL)});	
 		console.log(this.styles);
-		console.log(myJsonText);
+		this.renderStyle();
 	};
+	
+	this.renderStyle = function()
+	{
+		var styledMapType = new google.maps.StyledMapType(this.styles, { name: 'Styled' });
+        this.map.mapTypes.set('Styled', styledMapType);
+		this.showJson();
+	}
+	
+	this.showJson = function()
+	{
+		var jsonStyles = [];
+		for (var i = 0; i < this.styles.length; i++) {
+			jsonStyles[i] = '{\n'
+			jsonStyles[i] += '    featureType: "' + this.styles[i].featureType + '",\n';
+			jsonStyles[i] += '    elementType: "' + this.styles[i].elementType + '",\n';
+			jsonStyles[i] += '    stylers: [\n';
+			var jsonStylers = []
+			for (var j = 0; j < this.styles[i].stylers.length; j++) {
+				for (var p in this.styles[i].stylers[j]) {
+					switch (p) {
+						case 'hue':
+							jsonStylers[j] = '      { ' + p + ': "' + this.styles[i].stylers[j][p] + '" }';
+							break;
+						default:
+							jsonStylers[j] = '      { ' + p + ': ' + this.styles[i].stylers[j][p] + ' }'
+					}
+				}
+			}
+			jsonStyles[i] += jsonStylers.join(',\n');
+			jsonStyles[i] += '\n    ]\n';
+			jsonStyles[i] += '  }';
+		}
+		var json = '[\n  ' + jsonStyles.join(',') + '\n]';
+		document.getElementById('right').innerHTML=json;
+	}
 }
 
 var gmc = new googlemapcolorizer();
