@@ -1,0 +1,38 @@
+<html>
+<head>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	<script type='text/javascript' src="javascript/googlemapscolorizr.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/all.css">
+</head>
+<body onload="gmc.init()">
+
+	<div id="head">
+		<h1>Google Maps Colorizr</h1>
+	</div>
+	<div id="footer">
+		<p>c 2011 stadt.werk</p>
+	</div>
+	<div id="middle">
+		<div id="left">
+			<div id="items">
+			
+			</div>
+			<input type="button" name="addStyle" value="+" onclick="gmc.appendItemDiv()">
+		</div>
+		<div id="map">
+		</div>
+		<div id="right">
+			<p>
+				[
+					{
+						featureType: "all",
+						elementType: "all",
+						stylers: [
+						]
+					}
+				]
+			</p>
+		</div>
+	</div>
+</body>
+</html>
