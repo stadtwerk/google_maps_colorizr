@@ -86,11 +86,22 @@ function googlemapcolorizer()
 		this.googleBaseValues[2] = new Array("landscape.natural", 26, 93);
 		this.googleBaseValues[3] = new Array("poi.medical", 40, 83);
 		this.googleBaseValues[4] = new Array("poi.school", 43, 77);
-		this.googleBaseValues[5] = new Array("poi.place_of_worship", 4, 81);
-		this.googleBaseValues[6] = new Array("poi.park", 37, 72);
-		this.googleBaseValues[7] = new Array("road.highway", 100, 64);
-		this.googleBaseValues[8] = new Array("road.arterial", 100, 77);
-		this.googleBaseValues[9] = new Array("road.local", 100, 100);
+		this.googleBaseValues[5] = new Array("poi.business", 4, 81);
+		this.googleBaseValues[6] = new Array("poi.government", 4, 81);
+		this.googleBaseValues[7] = new Array("poi.place_of_worship", 4, 81);
+		this.googleBaseValues[8] = new Array("poi.sports_complex", 4, 81);
+		this.googleBaseValues[9] = new Array("poi.park", 37, 72);
+		this.googleBaseValues[10] = new Array("poi.attraction", 37, 72);
+		this.googleBaseValues[11] = new Array("road.highway", 100, 64);
+		this.googleBaseValues[12] = new Array("road.arterial", 100, 77);
+		this.googleBaseValues[13] = new Array("road.local", 100, 100);
+		this.googleBaseValues[14] = new Array("administrative.country", 0, 50);
+		this.googleBaseValues[15] = new Array("administrative.land_parcel", 0, 50);
+		this.googleBaseValues[16] = new Array("administrative.locality", 0, 0);
+		this.googleBaseValues[17] = new Array("administrative.neighborhood", 0, 50);
+		this.googleBaseValues[18] = new Array("administrative.province", 0, 50);
+		this.googleBaseValues[19] = new Array("transit", 0, 63);
+		
 	};
 	
 	//appends a new Style
@@ -158,10 +169,8 @@ function googlemapcolorizer()
 	//changes the IDs of the HTML Style divs to be equal with Style Array IDs
 	this.changeHtmlIds = function(deletedId)
 	{
-		console.log(deletedId+"\n");
 		for(var i = deletedId+1; i < this.index; i++)
 		{
-			console.log(i+"\n");
 			itemdiv = document.getElementById("item"+i.toString());
 			hiddeninput = itemdiv.firstChild;
 			itemdiv.setAttribute("id", "item"+(i-1));
@@ -181,13 +190,22 @@ function googlemapcolorizer()
 		value += '			<option onclick="gmc.selectedDropDownItem(this)">water</option>';
 		value += '			<option onclick="gmc.selectedDropDownItem(this)">landscape.man_made</option>';
 		value += '			<option onclick="gmc.selectedDropDownItem(this)">landscape.natural</option>';
-		value += '			<option onclick="gmc.selectedDropDownItem(this)">poi.medical</option>';
-		value += '			<option onclick="gmc.selectedDropDownItem(this)">poi.school</option>';
-		value += '			<option onclick="gmc.selectedDropDownItem(this)">poi.place_of_worship</option>';
-		value += '			<option onclick="gmc.selectedDropDownItem(this)">poi.park</option>';
 		value += '			<option onclick="gmc.selectedDropDownItem(this)">road.highway</option>';
 		value += '			<option onclick="gmc.selectedDropDownItem(this)">road.arterial</option>';
 		value += '			<option onclick="gmc.selectedDropDownItem(this)">road.local</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">poi.park</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">poi.business</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">poi.attraction</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">poi.medical</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">poi.school</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">poi.government</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">poi.place_of_worship</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">administrative.country</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">administrative.land_parcel</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">administrative.locality</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">administrative.neighborhood</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">administrative.province</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">transit</option>';
 		value += '		</select>';
 		value += '	</div>';
 		value += '</div>';
