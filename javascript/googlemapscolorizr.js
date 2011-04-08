@@ -55,12 +55,18 @@ function googlemapcolorizer()
 		this.appendItemDiv();
 		this.writeCode();
 		
+		//initialise Zeroclipboard
+		var clip = new ZeroClipboard.Client();
+		clip.addEventListener( 'mouseDown', function(client) { 
+			clip.setText( document.getElementById('json').innerHTML );
+		} );
+		clip.glue( 'copy' );
+		
 	};
 	
 	this.addEventHandler = function()
 	{
-		copybutton = document.getElementById("copy");
-		copybutton.onclick = this.copyToClipboard;
+		//google.maps.event.addListener(this.map, 'zoom_changed', this.writeCode());
 	};
 	
 	// sets the base saturation and lightness from google maps
@@ -295,12 +301,7 @@ function googlemapcolorizer()
         this.map.mapTypes.set('Styled', styledMapType);
 		this.writeCode();
 	}
-	
-	this.copyToClipboard = function()
-	{
-	
-	}
-	
+
 	this.writeCode = function()
 	{
 		
