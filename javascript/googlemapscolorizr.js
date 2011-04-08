@@ -172,7 +172,7 @@ function googlemapcolorizer()
 	{
 		value = '<input type="hidden" name="id" value="'+this.index+'">';
 		value += '<div class="wrap">';
-		value += '	<div class="headcolor"><input type="button" value="×" onclick="gmc.deleteItemDiv(this)" /></div>';
+		value += '	<div class="headcolor"><div class="dot"></div><input type="button" value="×" onclick="gmc.deleteItemDiv(this)" /></div>';
 		value += '	<div class="left">Feature: </div>';
 		value += '	<div class="right">';
 		value += '		<select name="featureTyp" onkeyup="gmc.selectedDropDown(this)" >';
