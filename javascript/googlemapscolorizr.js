@@ -45,6 +45,10 @@ function googlemapcolorizer()
         this.map = new google.maps.Map(div, options);
         var styledMapType = new google.maps.StyledMapType(styles, { name: 'Styled' });
         this.map.mapTypes.set('Styled', styledMapType);
+		 google.maps.event.addListener(this.map, 'zoom_changed', function() {
+			gmc.writeCode();
+		  });
+
 		
 		//initialise class
 		this.setGoogleBaseValues();
@@ -66,7 +70,9 @@ function googlemapcolorizer()
 	
 	this.addEventHandler = function()
 	{
-		//google.maps.event.addListener(this.map, 'zoom_changed', this.writeCode());
+		// google.maps.event.addListener(this.map, 'zoom_changed', function() {
+			// this.writecode();
+		// });
 	};
 	
 	// sets the base saturation and lightness from google maps
