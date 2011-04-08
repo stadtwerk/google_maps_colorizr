@@ -1,6 +1,6 @@
 /*
 Name:       Google Maps Colorizr
-Version:    0.0.2 (April 7 2011)
+Version:    0.0.6 (April 8 2011)
 Author:     Marc Köster
 Support:    http://stadtwerk.org
 
@@ -130,8 +130,6 @@ function googlemapcolorizer()
 	};
 	
 	
-	
-	
 	//adds a default style to style Array
 	this.addStyle = function()
 	{
@@ -174,6 +172,7 @@ function googlemapcolorizer()
 	{
 		value = '<input type="hidden" name="id" value="'+this.index+'">';
 		value += '<div class="wrap">';
+		value += '	<div class="headcolor"><input type="button" value="×" onclick="gmc.deleteItemDiv(this)" /></div>';
 		value += '	<div class="left">Feature: </div>';
 		value += '	<div class="right">';
 		value += '		<select name="featureTyp" onkeyup="gmc.selectedDropDown(this)" >';
@@ -203,8 +202,7 @@ function googlemapcolorizer()
 		value += '<div class="wrap">';
 		value += '	<div class="left">Color: </div>';
 		value += '	<div class="right"><input type="text" name="RGBValue" onchange="gmc.changedColor(this)"  onkeyup="gmc.changedColor(this)"/></div>';
-		value += '</div>';
-		value += '<div><input type="button" value="×" onclick="gmc.deleteItemDiv(this)"></div>';
+		value += '</div>';		
 		newItemDiv = document.createElement('div');
 		newItemDiv.setAttribute('id',"item"+this.index);
 		newItemDiv.setAttribute('class',"item");
