@@ -55,6 +55,7 @@ function googlemapcolorizer()
 		this.addEventHandler();
 		this.appendItemDiv();
 		this.writeCode();
+		this.getValuesFromUrl();
 		
 		
 		//initialise Zeroclipboard
@@ -149,6 +150,7 @@ function googlemapcolorizer()
 			this.changeHtmlIds(id);
 		}
 		this.styles.splice(id, 1);
+		this.deleteURLParameter(id);
 		this.index--;
 		this.renderStyle();
 	};
@@ -172,7 +174,7 @@ function googlemapcolorizer()
 	{
 		value = '<input type="hidden" name="id" value="'+this.index+'">';
 		value += '<div class="wrap">';
-		value += '	<div class="headcolor"><div class="dot"></div><input type="button" value="×" onclick="gmc.deleteItemDiv(this)" /></div>';
+		value += '	<div class="headcolor"><div id="dot'+this.index+'" class="dot"></div><input type="button" value="×" onclick="gmc.deleteItemDiv(this)" /></div>';
 		value += '	<div class="left">Feature: </div>';
 		value += '	<div class="right">';
 		value += '		<select name="featureTyp" onkeyup="gmc.selectedDropDown(this)" >';
@@ -225,6 +227,7 @@ function googlemapcolorizer()
 			if(color.length ==3){
 				color = color.substring(0,1)+color.substring(0,1)+color.substring(1,2)+color.substring(1,2)+color.substring(2,3)+color.substring(2,3);
 			}
+			document.getElementById("dot"+id).style.backgroundColor="#"+color;
 			input.className="";
 			this.Calculate(item, color);
 		}else{
@@ -288,6 +291,9 @@ function googlemapcolorizer()
 		}else{
 			googleS = Sbase;
 		}
+		
+		// add to URL
+		this.addUrlParameter(id,featureType,elementType,color);
 		
 		//add to style Array
 		this.styles[id].featureType = featureType;
@@ -359,7 +365,50 @@ function googlemapcolorizer()
 		var json = '[\n	' + jsonStyles.join(',') + '\n];';
 		return json;
 	}
-
+	
+	this.getValuesFromUrl = function()
+	{
+		var strParam = window.location.hash.substr(1);
+		if(strParam.length > 0)
+		{
+			var param = strParam.split("/");
+			var id = 0;
+			for(var i=0; i<param.length; i=i+3)
+			{
+				if(i != 0)
+				{
+					this.appendItemDiv();
+				}
+				itemdiv = document.getElementById("item"+id.toString());
+				itemdiv.getElementsByTagName("select")[0].value = param[i];
+				itemdiv.getElementsByTagName("select")[1].value = param[i+1];
+				itemdiv.getElementsByTagName("input")[2].value = param[i+2];
+				this.checkColor(itemdiv);
+				id++;
+			}
+		}
+	}
+	
+	this.addUrlParameter = function(id, feature, element, color)
+	{
+		var strParam = window.location.hash.substr(1);
+		if(strParam.length > 0){
+			var param = strParam.split("/");
+			param[id*3] = feature;
+			param[id*3+1] = element;
+			param[id*3+2] = color;
+			window.location.hash = "#"+param.toString().replace(/,/g,"/");
+		}else{
+			window.location.hash = "#"+feature+"/"+element+"/"+color
+		}
+	}
+	this.deleteURLParameter = function(id)
+	{
+		var strParam = window.location.hash.substr(1);
+		var param = strParam.split("/");
+		param.splice(id*3,3);
+		window.location.hash = "#"+param.toString().replace(/,/g,"/");
+	}
 }
 
 var gmc = new googlemapcolorizer();
