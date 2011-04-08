@@ -114,8 +114,8 @@
 		margin-bottom:50px;
 		margin-right:0;
 		margin-left:0;
-		padding: 0 20px 0 30px;
-		width:240px;
+		padding: 0 10px 0 30px;
+		width:250px;
 		overflow:auto;
 	}
 	#map{
@@ -218,11 +218,14 @@
 		white-space: pre;
 		overflow:auto;
 	}
+	#items{
+		width:100%;
+	}
 	.item{
 		padding:0 0 4px 0;		
 		width:100%;
-		margin: 0 0 10px -10px;
-		margin:0;
+		margin:0 0 20px 0;
+		
 		background:#ccc;
 		-webkit-border-radius: 10px;
 		-moz-border-radius: 10px;
@@ -231,7 +234,6 @@
 	.wrap{
 		overflow:auto;
 	}
-	
 	.item .headcolor{
 		overflow:auto;
 		-webkit-border-top-right-radius: 10px;
@@ -243,7 +245,6 @@
 		margin-bottom:10px;
 		background:#999;
 	}
-	
 	.item .dot{
 		-webkit-border-radius: 8px;
 		-moz-border-radius: 8px;
@@ -254,7 +255,6 @@
 		float:left;
 		margin:7px 0 0 10px;
 	}
-
 	.item .left{		
 		width:50px;
 		margin-left:10px;
@@ -294,7 +294,6 @@
 		font-family: 'GraublauWebBold', sans-serif;
 	}
 	.item input[type="button"]:hover{
-		
 		text-shadow: 0px -1px 1px #ccc;
 		color:#e43789;
 	}
@@ -302,7 +301,7 @@
 		background-color:#f99;
 	}
 	#add{
-		margin:10px 0 0 100px;
+		margin:0 0 0 100px;
 		width:40px;
 		height:40px;
 		border:0;
