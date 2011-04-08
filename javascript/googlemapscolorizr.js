@@ -51,9 +51,16 @@ function googlemapcolorizer()
 		this.index = 0;
 		this.styles=[];
 		this.isValidColor = [];
+		this.addEventHandler();
 		this.appendItemDiv();
 		this.writeCode();
 		
+	};
+	
+	this.addEventHandler = function()
+	{
+		copybutton = document.getElementById("copy");
+		copybutton.onclick = this.copyToClipboard;
 	};
 	
 	// sets the base saturation and lightness from google maps
@@ -287,6 +294,11 @@ function googlemapcolorizer()
 		var styledMapType = new google.maps.StyledMapType(this.styles, { name: 'Styled' });
         this.map.mapTypes.set('Styled', styledMapType);
 		this.writeCode();
+	}
+	
+	this.copyToClipboard = function()
+	{
+	
 	}
 	
 	this.writeCode = function()
