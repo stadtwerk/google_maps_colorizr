@@ -161,7 +161,7 @@ function googlemapcolorizer()
 	{
 		value = '<input type="hidden" name="id" value="'+this.index+'">';
 		value += '<div class="wrap">';
-		value += '	<div class="left">featureTyp: </div>';
+		value += '	<div class="left">Feature: </div>';
 		value += '	<div class="right">';
 		value += '		<select name="featureTyp" onkeyup="gmc.selectedDropDown(this)" >';
 		value += '			<option onclick="gmc.selectedDropDownItem(this)">water</option>';
@@ -178,7 +178,7 @@ function googlemapcolorizer()
 		value += '	</div>';
 		value += '</div>';
 		value += '<div class="wrap">';
-		value += '	<div class="left">elementType: </div>';
+		value += '	<div class="left">Element: </div>';
 		value += '	<div class="right">';
 		value += '		<select name="elementType">';
 		value += '			<option onclick="gmc.selectedDropDownItem(this)">all</option>';
@@ -188,10 +188,10 @@ function googlemapcolorizer()
 		value += '	</div>';
 		value += '</div>';
 		value += '<div class="wrap">';
-		value += '	<div class="left">RGB Value: </div>';
+		value += '	<div class="left">Color: </div>';
 		value += '	<div class="right"><input type="text" name="RGBValue" onchange="gmc.changedColor(this)"  onkeyup="gmc.changedColor(this)"/></div>';
 		value += '</div>';
-		value += '<div><input type="button" value="-" onclick="gmc.deleteItemDiv(this)"></div>';
+		value += '<div><input type="button" value="×" onclick="gmc.deleteItemDiv(this)"></div>';
 		newItemDiv = document.createElement('div');
 		newItemDiv.setAttribute('id',"item"+this.index);
 		newItemDiv.setAttribute('class',"item");
