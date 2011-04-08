@@ -103,7 +103,7 @@ function googlemapcolorizer()
 	//deletes a style
 	this.deleteItemDiv = function(button)
 	{
-		var item = button.parentNode.parentNode;
+		var item = button.parentNode.parentNode.parentNode;
 		document.getElementById("items").removeChild(item);
 		this.deleteStyle(parseInt(item.firstChild.value));
 	};
@@ -215,7 +215,7 @@ function googlemapcolorizer()
 	this.checkColor = function(item)
 	{
 		var id = item.firstChild.value;
-		var input = item.getElementsByTagName("input")[1];
+		var input = item.getElementsByTagName("input")[2];
 		var color = input.value;
 		
 		if(color.substring(0,1) == "#")
