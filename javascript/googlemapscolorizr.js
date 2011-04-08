@@ -45,9 +45,6 @@ function googlemapcolorizer()
         this.map = new google.maps.Map(div, options);
         var styledMapType = new google.maps.StyledMapType(styles, { name: 'Styled' });
         this.map.mapTypes.set('Styled', styledMapType);
-		 google.maps.event.addListener(this.map, 'zoom_changed', function() {
-			gmc.writeCode();
-		  });
 
 		
 		//initialise class
@@ -58,6 +55,7 @@ function googlemapcolorizer()
 		this.addEventHandler();
 		this.appendItemDiv();
 		this.writeCode();
+		
 		
 		//initialise Zeroclipboard
 		var clip = new ZeroClipboard.Client();
@@ -70,9 +68,12 @@ function googlemapcolorizer()
 	
 	this.addEventHandler = function()
 	{
-		// google.maps.event.addListener(this.map, 'zoom_changed', function() {
-			// this.writecode();
-		// });
+		google.maps.event.addListener(this.map, 'zoom_changed', function() {
+			gmc.writeCode();
+		});
+		google.maps.event.addListener(this.map, 'mouseup', function() {
+			gmc.writeCode();
+		});
 	};
 	
 	// sets the base saturation and lightness from google maps
@@ -338,26 +339,26 @@ function googlemapcolorizer()
 		var jsonStyles = [];
 		for (var i = 0; i < this.styles.length; i++) {
 			jsonStyles[i] = '{\n'
-			jsonStyles[i] += '    featureType: "' + this.styles[i].featureType + '",\n';
-			jsonStyles[i] += '    elementType: "' + this.styles[i].elementType + '",\n';
-			jsonStyles[i] += '    stylers: [\n';
+			jsonStyles[i] += '		featureType: "' + this.styles[i].featureType + '",\n';
+			jsonStyles[i] += '		elementType: "' + this.styles[i].elementType + '",\n';
+			jsonStyles[i] += '		stylers: [\n';
 			var jsonStylers = []
 			for (var j = 0; j < this.styles[i].stylers.length; j++) {
 				for (var p in this.styles[i].stylers[j]) {
 					switch (p) {
 						case 'hue':
-							jsonStylers[j] = '      { ' + p + ': "' + this.styles[i].stylers[j][p] + '" }';
+							jsonStylers[j] = '			{ ' + p + ': "' + this.styles[i].stylers[j][p] + '" }';
 							break;
 						default:
-							jsonStylers[j] = '      { ' + p + ': ' + this.styles[i].stylers[j][p] + ' }'
+							jsonStylers[j] = '			{ ' + p + ': ' + this.styles[i].stylers[j][p] + ' }'
 					}
 				}
 			}
 			jsonStyles[i] += jsonStylers.join(',\n');
-			jsonStyles[i] += '\n    ]\n';
-			jsonStyles[i] += '  }';
+			jsonStyles[i] += '\n		]\n';
+			jsonStyles[i] += '	}';
 		}
-		var json = '[\n  ' + jsonStyles.join(',') + '\n]';
+		var json = '[\n	' + jsonStyles.join(',') + '\n];';
 		return json;
 	}
 
