@@ -55,6 +55,7 @@ function googlemapcolorizer()
 		this.addEventHandler();
 		this.appendItemDiv();
 		this.writeCode();
+		this.getValuesFromUrl();
 		
 		
 		//initialise Zeroclipboard
@@ -226,6 +227,7 @@ function googlemapcolorizer()
 				color = color.substring(0,1)+color.substring(0,1)+color.substring(1,2)+color.substring(1,2)+color.substring(2,3)+color.substring(2,3);
 			}
 			input.className="";
+			this.setUrlParameter();
 			this.Calculate(item, color);
 		}else{
 			input.className="red";
@@ -358,6 +360,35 @@ function googlemapcolorizer()
 		}
 		var json = '[\n	' + jsonStyles.join(',') + '\n];';
 		return json;
+	}
+	
+	this.getValuesFromUrl = function()
+	{
+		var strParam = window.location.hash.substr(1);
+		if(strParam.length > 0)
+		{
+			var param = strParam.split("/");
+			console.log(param);
+			var id = 0;
+			for(var i=0; i<param.length; i=i+3)
+			{
+				if(i != 0)
+				{
+					this.appendItemDiv();
+				}
+				itemdiv = document.getElementById("item"+id.toString());
+				for(j=0; j<3; j++)
+				{
+					console.log(param[i+j]);
+				}
+				id++;
+			}
+		}
+	}
+	
+	this.setUrlParameter = function()
+	{
+	
 	}
 
 }
