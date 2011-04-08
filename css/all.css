@@ -170,6 +170,9 @@
 		border-bottom-left-radius: 10px;
 		background:#ccc;
 		cursor:pointer;
+		
+	}
+	#copy p{
 		text-align:center;
 		font-family: 'GraublauWebBold', sans-serif;
 		font-size:20px;
@@ -177,10 +180,27 @@
 		color:#444;
 		text-shadow: 0px 1px 1px #eee;
 	}
-	#copy:hover{
+	#copy:hover, #copy:hover p, #copy.hover, #copy.hover p{
 		color:#fff;
-		text-shadow: 0px -1px 1px #00c7ff;
+		text-shadow: 0px -1px 1px #666;
 		background:#00b7eb;
+	}
+	#copy.active, #copy.active p{
+		background:#00c000;
+		color:#fff;
+		text-shadow: 0px -1px 1px #666;
+	}
+	#copy p.default{
+		display:block;
+	}
+	#copy p.copied{
+		display:none;
+	}
+	#copy.active p.default{
+		display:none;
+	}
+	#copy.active p.copied{
+		display:block;
 	}
 	#json{
 		position:absolute;
