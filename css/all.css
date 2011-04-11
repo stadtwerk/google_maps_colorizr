@@ -39,15 +39,13 @@
 		background:#444;
 	}
   	h1{
-		font-family:  'BemboBold', sans-serif;
-		font-weight:bold;
+		font-family: 'BemboBold', sans-serif;
 		margin:0;
 		text-align:center;
-		font-size:44px;
+		font-size:48px;
 		line-height:78px;
-		color:#be883a;
-		color:#222;
-		text-shadow: 0px 1px 1px #666;
+		color:#eee;
+		text-shadow: 0 -1px 2px #222;
 	}
 	b{
 		font-family:  'BemboBold', sans-serif;
