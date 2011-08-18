@@ -220,6 +220,16 @@ function googlemapcolorizer()
 		value += '	</div>';
 		value += '</div>';
 		value += '<div class="wrap">';
+		value += '	<div class="left">Visibility: </div>';
+		value += '	<div class="right">';
+		value += '		<select name="visibility">';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">on</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">simplified</option>';
+		value += '			<option onclick="gmc.selectedDropDownItem(this)">off</option>';
+		value += '		</select>';
+		value += '	</div>';
+		value += '</div>';
+		value += '<div class="wrap">';
 		value += '	<div class="left">Color: </div>';
 		value += '	<div class="right"><input type="text" name="RGBValue" onchange="gmc.changedColor(this)"  onkeyup="gmc.changedColor(this)"/></div>';
 		value += '</div>';		
@@ -240,7 +250,7 @@ function googlemapcolorizer()
 		
 		if(color.substring(0,1) == "#")
 			color = color.substring(1,color.length);
-		if(!isNaN("0x"+color) && (color.length == 3 || color.length == 6)){
+		if(!isNaN("0x"+color) && (color.length == 0 || color.length == 3 || color.length == 6)){
 			this.isValidColor[id] = true;
 			if(color.length ==3){
 				color = color.substring(0,1)+color.substring(0,1)+color.substring(1,2)+color.substring(1,2)+color.substring(2,3)+color.substring(2,3);
@@ -263,6 +273,7 @@ function googlemapcolorizer()
 		var RGB = color;
 		var featureType = item.getElementsByTagName("select")[0].value;
 		var elementType = item.getElementsByTagName("select")[1].value;
+		var visibility = item.getElementsByTagName("select")[2].value;
 		
 		//calculate HSL values
 		var R = parseInt(RGB.substring(0,2), 16)/255;
@@ -311,15 +322,19 @@ function googlemapcolorizer()
 		}
 		
 		// add to URL
-		this.addUrlParameter(id,featureType,elementType,color);
+		this.addUrlParameter(id,featureType,elementType,color,visibility);
 		
 		//add to style Array
 		this.styles[id].featureType = featureType;
 		this.styles[id].elementType = elementType;
 		this.styles[id].stylers = [];
-		this.styles[id].stylers.push({hue: "#"+color});
-		this.styles[id].stylers.push({saturation: Math.round(googleS)});
-		this.styles[id].stylers.push({lightness: Math.round(googleL)});	
+		if(color.length > 0)
+		{
+			this.styles[id].stylers.push({hue: "#"+color});
+			this.styles[id].stylers.push({saturation: Math.round(googleS)});
+			this.styles[id].stylers.push({lightness: Math.round(googleL)});
+		}
+		this.styles[id].stylers.push({visibility: visibility});
 		this.renderStyle();
 	};
 	
@@ -400,6 +415,7 @@ function googlemapcolorizer()
 				itemdiv = document.getElementById("item"+id.toString());
 				itemdiv.getElementsByTagName("select")[0].value = param[i];
 				itemdiv.getElementsByTagName("select")[1].value = param[i+1];
+				itemdiv.getElementsByTagName("select")[2].value = param[i+3];
 				itemdiv.getElementsByTagName("input")[2].value = param[i+2];
 				this.checkColor(itemdiv);
 				id++;
@@ -407,7 +423,7 @@ function googlemapcolorizer()
 		}
 	}
 	
-	this.addUrlParameter = function(id, feature, element, color)
+	this.addUrlParameter = function(id, feature, element, color, visibility)
 	{
 		var strParam = window.location.hash.substr(1);
 		if(strParam.length > 0){
@@ -415,6 +431,7 @@ function googlemapcolorizer()
 			param[id*3] = feature;
 			param[id*3+1] = element;
 			param[id*3+2] = color;
+			param[id*3+3] = visibility;
 			window.location.hash = "#"+param.toString().replace(/,/g,"/");
 		}else{
 			window.location.hash = "#"+feature+"/"+element+"/"+color
