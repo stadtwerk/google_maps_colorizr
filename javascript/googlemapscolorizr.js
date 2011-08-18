@@ -406,7 +406,7 @@ function googlemapcolorizer()
 		{
 			var param = strParam.split("/");
 			var id = 0;
-			for(var i=0; i<param.length; i=i+3)
+			for(var i=0; i<param.length; i=i+4)
 			{
 				if(i != 0)
 				{
@@ -428,10 +428,10 @@ function googlemapcolorizer()
 		var strParam = window.location.hash.substr(1);
 		if(strParam.length > 0){
 			var param = strParam.split("/");
-			param[id*3] = feature;
-			param[id*3+1] = element;
-			param[id*3+2] = color;
-			param[id*3+3] = visibility;
+			param[id*4] = feature;
+			param[id*4+1] = element;
+			param[id*4+2] = color;
+			param[id*4+3] = visibility;
 			window.location.hash = "#"+param.toString().replace(/,/g,"/");
 		}else{
 			window.location.hash = "#"+feature+"/"+element+"/"+color
@@ -441,7 +441,7 @@ function googlemapcolorizer()
 	{
 		var strParam = window.location.hash.substr(1);
 		var param = strParam.split("/");
-		param.splice(id*3,3);
+		param.splice(id*4,3);
 		window.location.hash = "#"+param.toString().replace(/,/g,"/");
 	}
 }
