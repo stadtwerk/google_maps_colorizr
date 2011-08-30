@@ -1,6 +1,6 @@
 /*
 Name:       Google Maps Colorizr
-Version:    0.0.6 (April 8 2011)
+Version:    0.1.3 (30.08.2011)
 Author:     Marc Köster
 Support:    http://stadtwerk.org
 
@@ -81,26 +81,26 @@ function googlemapcolorizer()
 	this.setGoogleBaseValues = function()
 	{
 		this.googleBaseValues = new Array();
-		this.googleBaseValues[0] = new Array("water", 33, 70);
+		this.googleBaseValues[0] = new Array("water", 45, 76);
 		this.googleBaseValues[1] = new Array("landscape.man_made", 27, 89);
-		this.googleBaseValues[2] = new Array("landscape.natural", 26, 93);
-		this.googleBaseValues[3] = new Array("poi.medical", 40, 83);
-		this.googleBaseValues[4] = new Array("poi.school", 43, 77);
-		this.googleBaseValues[5] = new Array("poi.business", 4, 81);
-		this.googleBaseValues[6] = new Array("poi.government", 4, 81);
-		this.googleBaseValues[7] = new Array("poi.place_of_worship", 4, 81);
-		this.googleBaseValues[8] = new Array("poi.sports_complex", 4, 81);
-		this.googleBaseValues[9] = new Array("poi.park", 37, 72);
-		this.googleBaseValues[10] = new Array("poi.attraction", 37, 72);
+		this.googleBaseValues[2] = new Array("landscape.natural", 15, 95);
+		this.googleBaseValues[3] = new Array("poi.medical", 41, 87);
+		this.googleBaseValues[4] = new Array("poi.school", 48, 83);
+		this.googleBaseValues[5] = new Array("poi.business", 15, 85);
+		this.googleBaseValues[6] = new Array("poi.government", 15, 85);
+		this.googleBaseValues[7] = new Array("poi.place_of_worship", 15, 85);
+		this.googleBaseValues[8] = new Array("poi.sports_complex", 15, 85);
+		this.googleBaseValues[9] = new Array("poi.park", 43, 78);
+		this.googleBaseValues[10] = new Array("poi.attraction", 43, 78);
 		this.googleBaseValues[11] = new Array("road.highway", 100, 64);
 		this.googleBaseValues[12] = new Array("road.arterial", 100, 77);
 		this.googleBaseValues[13] = new Array("road.local", 100, 100);
-		this.googleBaseValues[14] = new Array("administrative.country", 0, 50);
-		this.googleBaseValues[15] = new Array("administrative.land_parcel", 0, 50);
+		this.googleBaseValues[14] = new Array("administrative.country", 0, 51);
+		this.googleBaseValues[15] = new Array("administrative.land_parcel", 0, 51);
 		this.googleBaseValues[16] = new Array("administrative.locality", 0, 0);
-		this.googleBaseValues[17] = new Array("administrative.neighborhood", 0, 50);
-		this.googleBaseValues[18] = new Array("administrative.province", 0, 50);
-		this.googleBaseValues[19] = new Array("transit", 0, 63);
+		this.googleBaseValues[17] = new Array("administrative.neighborhood", 0, 51);
+		this.googleBaseValues[18] = new Array("administrative.province", 0, 51);
+		this.googleBaseValues[19] = new Array("transit", 0, 75);
 		
 	};
 	
