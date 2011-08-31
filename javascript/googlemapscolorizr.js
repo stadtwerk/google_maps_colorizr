@@ -1,6 +1,6 @@
 /*
 Name:       Google Maps Colorizr
-Version:    0.1.3 (30.08.2011)
+Version:    0.1.4 (30.08.2011)
 Author:     Marc Köster
 Support:    http://stadtwerk.org
 
@@ -434,14 +434,14 @@ function googlemapcolorizer()
 			param[id*4+3] = visibility;
 			window.location.hash = "#"+param.toString().replace(/,/g,"/");
 		}else{
-			window.location.hash = "#"+feature+"/"+element+"/"+color
+			window.location.hash = "#"+feature+"/"+element+"/"+color+"/"+visibility;
 		}
 	}
 	this.deleteURLParameter = function(id)
 	{
 		var strParam = window.location.hash.substr(1);
 		var param = strParam.split("/");
-		param.splice(id*4,3);
+		param.splice(id*4,4);
 		window.location.hash = "#"+param.toString().replace(/,/g,"/");
 	}
 }
