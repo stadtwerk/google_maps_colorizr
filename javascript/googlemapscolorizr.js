@@ -1,6 +1,6 @@
 /*
 Name:       Google Maps Colorizr
-Version:    0.1.4 (30.08.2011)
+Version:    0.1.5 (01.11.2011)
 Author:     Marc Köster
 Support:    http://stadtwerk.org
 
@@ -375,16 +375,19 @@ function googlemapcolorizer()
 	{
 		var jsonStyles = [];
 		for (var i = 0; i < this.styles.length; i++) {
-			jsonStyles[i] = '{\n'
-			jsonStyles[i] += '		featureType: "' + this.styles[i].featureType + '",\n';
-			jsonStyles[i] += '		elementType: "' + this.styles[i].elementType + '",\n';
-			jsonStyles[i] += '		stylers: [\n';
+			jsonStyles[i] = "{\n"
+			jsonStyles[i] += "		featureType: '" + this.styles[i].featureType + "',\n";
+			jsonStyles[i] += "		elementType: '" + this.styles[i].elementType + "',\n";
+			jsonStyles[i] += "		stylers: [\n";
 			var jsonStylers = []
 			for (var j = 0; j < this.styles[i].stylers.length; j++) {
 				for (var p in this.styles[i].stylers[j]) {
 					switch (p) {
 						case 'hue':
-							jsonStylers[j] = '			{ ' + p + ': "' + this.styles[i].stylers[j][p] + '" }';
+							jsonStylers[j] = "			{ " + p + ": '" + this.styles[i].stylers[j][p] + "' }";
+							break;
+						case 'visibility':
+							jsonStylers[j] = "			{ " + p + ": '" + this.styles[i].stylers[j][p] + "' }";
 							break;
 						default:
 							jsonStylers[j] = '			{ ' + p + ': ' + this.styles[i].stylers[j][p] + ' }'
