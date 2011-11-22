@@ -186,7 +186,7 @@ function googlemapcolorizer()
 		value += '	<div class="headcolor"><div id="dot'+this.index+'" class="dot"></div><input type="button" value="×" onclick="gmc.deleteItemDiv(this)" /></div>';
 		value += '	<div class="left">Feature: </div>';
 		value += '	<div class="right">';
-		value += '		<select name="featureTyp" onkeyup="gmc.selectedDropDown(this)" >';
+		value += '		<select name="featureTyp" onchange="gmc.selectedDropDown(this)" >';
 		value += '			<option onclick="gmc.selectedDropDownItem(this)">water</option>';
 		value += '			<option onclick="gmc.selectedDropDownItem(this)">landscape.man_made</option>';
 		value += '			<option onclick="gmc.selectedDropDownItem(this)">landscape.natural</option>';
@@ -212,7 +212,7 @@ function googlemapcolorizer()
 		value += '<div class="wrap">';
 		value += '	<div class="left">Element: </div>';
 		value += '	<div class="right">';
-		value += '		<select name="elementType">';
+		value += '		<select name="elementType" onchange="gmc.selectedDropDown(this)">';
 		value += '			<option onclick="gmc.selectedDropDownItem(this)">all</option>';
 		value += '			<option onclick="gmc.selectedDropDownItem(this)">geometry</option>';
 		value += '			<option onclick="gmc.selectedDropDownItem(this)">labels</option>';
@@ -222,7 +222,7 @@ function googlemapcolorizer()
 		value += '<div class="wrap">';
 		value += '	<div class="left">Visibility: </div>';
 		value += '	<div class="right">';
-		value += '		<select name="visibility">';
+		value += '		<select name="visibility" onchange="gmc.selectedDropDown(this)">';
 		value += '			<option onclick="gmc.selectedDropDownItem(this)">on</option>';
 		value += '			<option onclick="gmc.selectedDropDownItem(this)">simplified</option>';
 		value += '			<option onclick="gmc.selectedDropDownItem(this)">off</option>';
