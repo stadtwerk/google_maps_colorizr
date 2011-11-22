@@ -294,6 +294,7 @@ function googlemapcolorizer()
 			}
 		}
 		
+		
 		//get base values
 		for (var i=0, item; item=this.googleBaseValues[i]; i++) {
 		   if (this.googleBaseValues[i][0] == featureType) {
