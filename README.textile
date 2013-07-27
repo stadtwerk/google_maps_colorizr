@@ -1,3 +1,8 @@
 h1. Google Maps Colorizr
 
 Generates HSL colors for the Google Maps API 3.
+
+Changes Compared to original Colorizr
+
+
+-Color picker
