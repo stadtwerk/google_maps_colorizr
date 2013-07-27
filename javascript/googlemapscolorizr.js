@@ -113,6 +113,8 @@ function googlemapcolorizer()
 	{
 		document.getElementById("items").appendChild(this.getItemDiv());
 		this.addStyle();
+		//call jscolor 
+		jscolor.init();
 		this.index++;
 	};
 	
@@ -239,7 +241,7 @@ function googlemapcolorizer()
 		value += '</div>';
 		value += '<div class="wrap">';
 		value += '	<div class="left">Color: </div>';
-		value += '	<div class="right"><input type="text" name="RGBValue" onchange="gmc.changedColor(this)"  onkeyup="gmc.changedColor(this)"/></div>';
+		value += '	<div class="right"><input type="text" class="color" name="RGBValue" onchange="gmc.changedColor(this)"  onkeyup="gmc.changedColor(this)"/></div>';
 		value += '</div>';		
 		newItemDiv = document.createElement('div');
 		newItemDiv.setAttribute('id',"item"+this.index);
